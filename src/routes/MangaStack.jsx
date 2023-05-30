@@ -10,7 +10,7 @@ export function MangaStack() {
     return (
 
         <Stack.Navigator options={{ headerShown: false }}>
-            <Stack.Screen name="Explore" component={MangasScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Mangas" component={MangasScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Details" component={MangaDetailsScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Read" component={ReadScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
