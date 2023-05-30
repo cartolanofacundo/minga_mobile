@@ -1,12 +1,10 @@
+import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-
+import { RootStack } from './src/routes/RootStack';
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Dev</Text>
-      <StatusBar style="auto" />
-    </View>
+    <RootStack/>
   );
 }
 
