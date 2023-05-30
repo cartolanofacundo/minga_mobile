@@ -2,14 +2,15 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthStack } from './AuthStack';
 import { AppTabs } from './AppTabs';
+import { useSelector } from 'react-redux';
 
 
 export function RootStack() {
-  let authenticated = false;
+  let {token} = useSelector(store => store.user)
   return (
     <NavigationContainer>
-        {!authenticated && <AuthStack />}
-        {authenticated && <AppTabs/>}
+        {!token && <AuthStack />}
+        {token && <AppTabs/>}
     </NavigationContainer>
   );
 }

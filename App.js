@@ -1,18 +1,35 @@
 import 'react-native-gesture-handler';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
+
 import { RootStack } from './src/routes/RootStack';
-export default function App() {
+import { useEffect } from 'react';
+import { _retrieveData } from './src/utils/utils';
+import { Provider, useDispatch } from 'react-redux';
+import { store } from "./src/store/store"
+import actions from './src/store/user/authActions';
+
+const { sign_in_token } = actions
+
+export function AppWrapper() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    _retrieveData({ key: "token" })
+      .then((res) => typeof res === "string" && dispatch(sign_in_token()))
+      .catch(err => console.log(err))
+  }, [])
   return (
-    <RootStack/>
-  );
+
+    <RootStack />
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+
+
+  return (
+    <Provider store={store}>
+      <AppWrapper />
+    </Provider>
+
+  );
+}
