@@ -1,4 +1,4 @@
-import { View, Text,  TouchableOpacity, ActivityIndicator, ImageBackground,} from 'react-native';
+import { View, Text,  TouchableOpacity, ImageBackground,} from 'react-native';
 import { useSelector } from 'react-redux';
 import image from "../../assets/home_background.png"
 export function HomeScreen({ navigation }) {
