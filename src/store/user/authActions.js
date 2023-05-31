@@ -7,11 +7,7 @@ import axios from "axios";
 const sign_in = createAsyncThunk("sign_in", async ({ data }, { rejectWithValue }) => {
     try {
         let url = apiUrl + "auth/signin";
-        let newData = {
-            email: "lucas@mh.com.ar",
-            password: "hola1234"
-        }
-        let response = await axios.post(url, newData);
+        let response = await axios.post(url, data);
         await _storeData({key: "token", value: response.data.token})
         return {
             success: response.data.success,
