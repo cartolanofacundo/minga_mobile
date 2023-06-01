@@ -30,7 +30,6 @@ export function MangaDetailsScreen({ route, navigation }) {
     }, [showChapters])
     function handleScrollEnd() {
         if ((page + 1 <= pages) && !loadingChapters && showChapters) {
-            console.log("dispatch")
             dispatch(get_all_from_manga({ manga_id: manga_id, page: page + 1 }))
         }
     }
