@@ -98,11 +98,11 @@ const verify_code = createAsyncThunk("verify_code", async ({data}, { rejectWithV
             user: null
         }
     } catch (error) {
-        let { newError } = parseError({ error });
+        
         return rejectWithValue({
             success: false,
             loading: false,
-            error: newError,
+            error: {verifyFailed: "Wrong code"},
             user: null
         })
     }
