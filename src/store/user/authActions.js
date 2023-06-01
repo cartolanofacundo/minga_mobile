@@ -15,7 +15,6 @@ const sign_in = createAsyncThunk("sign_in", async ({ data }, { rejectWithValue }
             token: response.data.token
         }
     } catch (error) {
-        console.log(error)
         let { newError } = parseError({ error });
         return rejectWithValue({
             success: false,
