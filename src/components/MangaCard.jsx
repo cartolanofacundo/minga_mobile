@@ -11,7 +11,7 @@ export function MangaCard({ manga, navigation }) {
             />
             <View className="h-2/3 justify-center items-start ml-4 grow">
                 <Text className="mb-2 text-lg max-w-[140px] text-[#222222] font-medium">{manga?.title}</Text>
-                <Text style={{color: manga?.category_id?.color }}>shonen</Text>
+                <Text style={{color: manga?.category_id?.color }}>{manga.category_id.name}</Text>
             </View>
             <Image className="mr-[-130px] h-[300px] w-[280px] object-top object-cover rounded-full" source={{ uri: manga?.cover_photo }} />
         </TouchableOpacity>

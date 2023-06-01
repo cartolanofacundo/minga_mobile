@@ -26,6 +26,7 @@ export function MangasScreen({ navigation }) {
             setShowMangas(mangas)
         }
     }, [mangas])
+
     useEffect(() => {
         setShowMangas(mangas.filter((item) => item.title.toLowerCase().includes(searchFilter.toLowerCase())))
     }, [searchFilter])
@@ -46,7 +47,7 @@ export function MangasScreen({ navigation }) {
                 if (isCloseToBottom(nativeEvent)) {
                     handleScrollEnd()
                 }
-            }}>
+            }} scrollEventThrottle={400}>
                 <View className="w-full h-[55vh] relative flex flex-col justify-center items-center">
                     <ImageBackground source={bg} resizeMode="cover" className="absolute top-0 bottom-0 left-0 right-0" />
                     <Text className="w-3/4 text-3xl  text-white text-center font-medium mb-8">Explore Mangas</Text>
@@ -59,7 +60,7 @@ export function MangasScreen({ navigation }) {
                 </View>
                 <View className="bg-white rounded-t-3xl -mt-24 flex flex-col justify-start items-center p-4 min-h-[45vh]">
 
-                    {showMangas.length === 0 ? <NothingToShow /> : showMangas.map((item) => <MangaCard key={item._id} navigation={navigation} manga={item} />)}
+                    {(!loading && showMangas.length === 0) ? <NothingToShow /> : showMangas.map((item) => <MangaCard key={item._id} navigation={navigation} manga={item} />)}
                     {loading && <ActivityIndicator className="my-4 absolute bottom-0" color={"#000000"} />}
                 </View>
 

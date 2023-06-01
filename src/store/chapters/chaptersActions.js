@@ -4,7 +4,7 @@ import axios from "axios";
 import { parsePagesArray } from "../../utils/utils";
 import { _retrieveData } from "../../utils/utils";
 
-const get_manga = createAsyncThunk("get_manga", async ({ manga_id, path }) => {
+const get_manga = createAsyncThunk("get_manga", async ({ manga_id }) => {
     try {
         let token = await _retrieveData({key: "token"})
         let headers = { headers: { 'Authorization': `Bearer ${token}` } }
@@ -13,6 +13,7 @@ const get_manga = createAsyncThunk("get_manga", async ({ manga_id, path }) => {
         return {
 
             manga: response.data.manga,
+            manga_id: manga_id,
             ranking: response.data.ranking,
             numberChapter: response.data.numberChapter,
             userReactions: response.data.userReactions
@@ -27,8 +28,6 @@ const send_reaction = createAsyncThunk("send_reaction", async ({ manga_id, name 
         let token = await _retrieveData({key: "token"})
         let headers = { headers: { 'Authorization': `Bearer ${token}` } }
         let response = await axios.post(apiUrl + 'reactions', { name: name, manga_id: manga_id }, headers)
-        console.log(name)
-        console.log(response.data.destroy)
         return {
             name: name,
             destroy: response.data.destroy,
@@ -39,19 +38,18 @@ const send_reaction = createAsyncThunk("send_reaction", async ({ manga_id, name 
     }
 })
 
-const get_all_from_manga = createAsyncThunk("get_all_from_manga", async ({ manga_id, page, path }) => {
+const get_all_from_manga = createAsyncThunk("get_all_from_manga", async ({ manga_id, page }) => {
     try {
         let token = await _retrieveData({key: "token"})
         let headers = { headers: { 'Authorization': `Bearer ${token}` } }
         let url = apiUrl + "chapters?" + "manga_id=" + manga_id + "&" + "page=" + page;
         let response = await axios.get(url, headers);
-        let pages = parsePagesArray(response.data.pages)
+        let pages = response.data.pages
         return {
             chapters: response.data.chapters,
             page: page,
             pages: pages,
             manga_id: manga_id,
-            path: path,
             loading: false
         }
     } catch (error) {

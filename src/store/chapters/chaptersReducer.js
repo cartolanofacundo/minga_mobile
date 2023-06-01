@@ -7,11 +7,12 @@ const { get_all_from_manga, get_manga, send_reaction } = actions
 const initial_state = {
     manga: null,
     manga_id: null,
+    chapters_manga_id: null,
     chapters: [],
-    path: null,
-    loading: false,
+    loadingChapters: false,
+    loadingManga: false,
     page: 1,
-    pages: null
+    pages: null,
 }
 
 
@@ -23,12 +24,11 @@ const reducer = createReducer(
             (state, action) => {
                 const new_state = {
                     ...state,
-                    chapters: action.payload.chapters,
+                    chapters: state.chapters_manga_id === action.payload.manga_id ? [...state.chapters,...action.payload.chapters] : action.payload.chapters,
                     page: action.payload.page,
                     pages: action.payload.pages,
-                    manga_id: action.payload.manga_id,
-                    path: action.payload.path,
-                    loading: false
+                    chapters_manga_id: action.payload.manga_id,
+                    loadingChapters: false
                 }
                 return new_state
             }
@@ -38,7 +38,7 @@ const reducer = createReducer(
             (state, action) => {
                 const new_state = {
                     ...state,
-                    loading: true
+                    loadingChapters: true
                 }
                 return new_state
             }
@@ -48,10 +48,9 @@ const reducer = createReducer(
             (state, action) => {
                 const new_state = {
                     ...state,
-                    manga_id: null,
+                    chapters_manga_id: null,
                     chapters: null,
-                    path: null,
-                    loading: false,
+                    loadingChapters: false,
                     page: 1,
                     pages: null
 
@@ -63,13 +62,13 @@ const reducer = createReducer(
         .addCase(
             get_manga.fulfilled,
             (state, action) => {
-                console.log("entre aca")
                 const new_state = {
                     ...state,
+                    loadingManga: false,
+                    manga_id: action.payload.manga_id,
                     manga: action.payload.manga,
                     ranking: action.payload.ranking,
                     totalChapters: action.payload.numberChapter,
-                    userReactions: action.payload.userReactions
                 }
                 return new_state
             }
@@ -79,7 +78,7 @@ const reducer = createReducer(
             (state, action) => {
                 const new_state = {
                     ...state,
-                    loading: true
+                    loadingManga: true
                 }
                 return new_state
             }
@@ -89,30 +88,9 @@ const reducer = createReducer(
             (state, action) => {
                 const new_state = {
                     ...state,
-                    loading: false,
+                    loadingManga: false,
                     manga_id: null,
-                    path: null,
                     manga: null
-                }
-                return new_state
-            }
-        )
-        .addCase(
-            send_reaction.fulfilled,
-            (state, action) => {
-                const new_state = {
-                    ...state,
-                    manga:{
-                        ...state.manga,
-                        reactions : {
-                            ...state.manga.reactions,
-                            [action.payload.name]: action.payload.destroy ? state.manga.reactions[action.payload.name]-1 : state.manga.reactions[action.payload.name]+1
-                        }
-                    },
-                    userReactions:{
-                        ...state.userReactions,
-                        [action.payload.name]: !state.userReactions[action.payload.name]
-                    }
                 }
                 return new_state
             }
