@@ -29,7 +29,7 @@ export function ReadScreen({route, navigation }) {
         <View className="w-full h-full flex flex-col justify-center items-center relative">
             <Pressable onPress={handlePrevPage} className="absolute w-1/2 top-0 bottom-0 left-0 z-40"/>
             <Pressable onPress={handleNextPage} className="absolute w-1/2 top-0 bottom-0 right-0 z-40"/>
-            <Image className="w-full h-full" resizeMode='contain' source={{ uri: pages[actualPage] }} />
+            {pages?.length > 0 && <Image className="w-full h-full" resizeMode='contain' source={{ uri: pages[actualPage] }} />}
         </View>
     )
 
