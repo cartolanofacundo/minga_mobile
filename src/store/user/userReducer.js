@@ -5,6 +5,7 @@ const { sign_in, sign_in_token, sign_out, sign_up, clean_up, verify_code } = aut
 
 let initial_state = {
     success: null,
+    loadingScreen: null,
     error: null,
     loading: null,
     user: null,
@@ -61,7 +62,7 @@ const reducer = createReducer(
                 const new_state = {
                     ...state,
                     user: action.payload.user,
-                    loading: false,
+                    loadingScreen: false,
                     error: null,
                     success: true,
                     token: action.payload.token
@@ -76,7 +77,7 @@ const reducer = createReducer(
                 const new_state = {
                     ...state,
                     error: null,
-                    loading: true
+                    loadingScreen: true
                 }
                 return new_state;
             }
@@ -88,7 +89,7 @@ const reducer = createReducer(
                     ...state,
                     error: action.payload.error,
                     success: false,
-                    loading: false,
+                    loadingScreen: false,
                     user: null
                 }
                 return new_state
